@@ -41,5 +41,5 @@ app.post("/api/admin/:id/approve", (req, res) => {
 app.get("/api/social/history", (_req, res) => res.json(socialHistory));
 
 app.listen(3001, () => {
-  console.log("EV Pulse API running on :3001");
+  console.log("MVMT ZERO API running on :3001");
 });

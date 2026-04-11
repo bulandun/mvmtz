@@ -7,7 +7,7 @@
  */
 
 export async function summarizeArticleWithAI({ client, article, length = "standard" }) {
-  const prompt = `You are EV Pulse's factual editor.\n
+  const prompt = `You are MVMT ZERO's factual editor.\n
 Return JSON with:
 headline, shortSummary, bullets[3], whyItMatters, needsReview.
 Constraints:

@@ -1,4 +1,4 @@
-# EV Pulse: Full App Structure & Workflow
+# MVMT ZERO: Full App Structure & Workflow
 
 ## Recommended project layout (Next.js App Router)
 
@@ -41,7 +41,7 @@
 
 ## Admin workflow
 1. Ingestion job fetches EV stories from RSS/API.
-2. Dedup + normalize + categorize into one of EV Pulse topic buckets.
+2. Dedup + normalize + categorize into one of MVMT ZERO topic buckets.
 3. AI summary pipeline generates headline, short summary, bullets, and optional "Why it matters".
 4. Flag uncertain/conflicting output for manual review.
 5. Admin reviews queue, edits text, and sets status: draft/approved/rejected.
