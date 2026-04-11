@@ -1,4 +1,4 @@
-# MVMT ZERO Backend Blueprint
+# MVMT ZERO byte Backend Blueprint
 
 This folder provides a production-ready reference architecture for ingestion, summarization, moderation, scheduling, analytics, and X/Twitter publishing.
 
@@ -9,7 +9,7 @@ This folder provides a production-ready reference architecture for ingestion, su
 - `services/twitterPublisher.js`: Post formatter + publish handler with status tracking.
 - `jobs/scheduler.js`: Cron-like orchestration for fetch/summarize/post pipelines.
 - `db/schema.sql`: Relational schema for articles, summaries, tags, post history, analytics.
-- `data/sample-articles.json`: Seed data representing MVMT ZERO content categories.
+- `data/sample-articles.json`: Seed data representing MVMT ZERO byte content categories.
 
 ## Suggested stack
 - Runtime: Node.js + TypeScript
