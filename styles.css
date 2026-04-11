@@ -148,6 +148,15 @@ button {
 
 .card:last-child { border-bottom: none; }
 
+.story-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  margin-bottom: .65rem;
+  border: 1px solid var(--line);
+}
+
 .meta {
   color: var(--muted);
   font-size: .78rem;
