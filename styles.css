@@ -184,6 +184,19 @@ button {
   padding: .3rem .6rem;
   font-size: .86rem;
   background: #f9f6f1;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.brand-logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #d8d8d8;
+  padding: 2px;
 }
 
 .newsletter { display: grid; gap: .55rem; }

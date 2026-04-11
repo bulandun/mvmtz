@@ -1,4 +1,9 @@
 const state = {
+  brandLogos: {
+    Rivian: "https://logo.clearbit.com/rivian.com",
+    BYD: "https://logo.clearbit.com/byd.com",
+    "Public Policy": "https://logo.clearbit.com/europa.eu"
+  },
   articles: [
     {
       id: 1,
@@ -129,7 +134,18 @@ function renderTrendingBrands() {
   }, {});
   const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   document.getElementById("trendingBrands").innerHTML = sorted
-    .map(([brand, count]) => `<span class="chip">${brand} • ${count}</span>`)
+    .map(([brand, count]) => `
+      <span class="chip">
+        <img
+          class="brand-logo"
+          src="${state.brandLogos[brand] || `https://logo.clearbit.com/${encodeURIComponent(brand)}.com`}"
+          alt="${brand} logo"
+          loading="lazy"
+          onerror="this.style.display='none';"
+        />
+        ${brand} • ${count}
+      </span>
+    `)
     .join("");
 }
 
