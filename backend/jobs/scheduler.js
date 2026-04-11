@@ -3,12 +3,12 @@ import { normalizeArticle, removeDuplicates } from "../services/newsIngestion.js
 
 /**
  * Example schedule strategy:
- * - every 15 min: fetch fresh EV feeds/APIs
+ * - every 3 hours: fetch fresh EV feeds/APIs
  * - every 30 min: summarize new stories
  * - every 5 min: publish approved/scheduled social posts
  */
 export function startJobs({ fetchRawItems, persistArticles, summarizePending, publishScheduled }) {
-  cron.schedule("*/15 * * * *", async () => {
+  cron.schedule("0 */3 * * *", async () => {
     const rawItems = await fetchRawItems();
     const clean = removeDuplicates(rawItems.map(normalizeArticle));
     await persistArticles(clean);
