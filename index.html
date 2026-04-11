@@ -3,30 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EV Pulse — Bite-Sized EV Industry News</title>
-  <meta name="description" content="EV Pulse delivers up-to-date electric vehicle news summaries with an editorial, mobile-first experience." />
+  <title>EV Pulse — Jalopnik-inspired EV Newsroom</title>
+  <meta name="description" content="EV Pulse delivers EV and automotive industry coverage in a bold, editorial newsroom layout." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">⚡ EV Pulse</div>
-    <nav>
+  <header class="site-header">
+    <div class="masthead">EV PULSE</div>
+    <nav class="section-nav">
       <a href="#latest">Latest</a>
-      <a href="#top5">Top 5</a>
-      <a href="#trending">Trending Brands</a>
-      <a href="#admin">Admin</a>
+      <a href="#top5">Top Stories</a>
+      <a href="#trending">Brands</a>
     </nav>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <p class="badge">Real-time EV intelligence</p>
-      <h1>Bite-sized EV news, ready to read and publish.</h1>
-      <p class="subtitle">Automated ingestion, AI summaries, editorial review, and one-click X publishing for EV launches, battery tech, charging, autonomy, policy, and market trends.</p>
-      <div class="hero-actions">
+  <main class="page">
+    <section class="lead-story" id="latest">
+      <p class="kicker">Electric mobility newsroom</p>
+      <h1>Bite-sized EV reporting with a fast, magazine-style reading experience.</h1>
+      <p class="dek">Track battery breakthroughs, policy changes, and market shifts in one place.</p>
+      <div class="controls">
         <input id="searchInput" type="search" placeholder="Search topic, brand, region..." aria-label="Search EV news" />
         <select id="topicFilter"><option value="all">All topics</option></select>
         <select id="regionFilter">
@@ -39,42 +38,37 @@
       </div>
     </section>
 
-    <section id="top5" class="panel">
-      <h2>Top 5 EV headlines today</h2>
+    <section id="top5" class="strip">
+      <h2>Top stories</h2>
       <ol id="topHeadlines"></ol>
     </section>
 
-    <section id="latest" class="panel">
-      <div class="panel-head">
-        <h2>Latest EV stories</h2>
-        <span id="resultCount" class="muted"></span>
-      </div>
-      <div id="newsGrid" class="grid"></div>
-    </section>
+    <section class="content-grid">
+      <section class="stories">
+        <div class="stories-head">
+          <h2>Latest EV stories</h2>
+          <span id="resultCount"></span>
+        </div>
+        <div id="newsGrid" class="news-list"></div>
+      </section>
 
-    <section id="trending" class="panel">
-      <h2>Trending brands</h2>
-      <div id="trendingBrands" class="chip-row"></div>
-    </section>
-
-    <section class="panel">
-      <h2>Newsletter signup</h2>
-      <form class="newsletter" onsubmit="event.preventDefault(); alert('Subscribed to EV Pulse Daily.');">
-        <input type="email" placeholder="you@company.com" required />
-        <button type="submit">Subscribe</button>
-      </form>
-    </section>
-
-    <section id="admin" class="panel admin">
-      <h2>Admin dashboard (workflow demo)</h2>
-      <p class="muted">Review AI output, edit summaries, approve/reject, and queue for X posting.</p>
-      <div id="adminQueue" class="admin-queue"></div>
-      <h3>Publishing history</h3>
-      <ul id="postHistory"></ul>
+      <aside class="sidebar">
+        <section id="trending" class="widget">
+          <h3>Trending brands</h3>
+          <div id="trendingBrands" class="chip-row"></div>
+        </section>
+        <section class="widget newsletter-wrap">
+          <h3>Newsletter</h3>
+          <form class="newsletter" onsubmit="event.preventDefault(); alert('Subscribed to EV Pulse Daily.');">
+            <input type="email" placeholder="you@company.com" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </section>
+      </aside>
     </section>
   </main>
 
-  <footer>EV Pulse • Editorial-grade EV briefing platform • Dark/Light mode ready</footer>
+  <footer>EV Pulse • Independent EV & auto coverage</footer>
   <script src="app.js"></script>
 </body>
 </html>
