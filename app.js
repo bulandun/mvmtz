@@ -57,15 +57,31 @@ function buildFallbackImage(article) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}" viewBox="0 0 ${canvasWidth} ${canvasHeight}">
     <defs>
       <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#1f283a" />
-        <stop offset="100%" stop-color="#4d5d82" />
+        <stop offset="0%" stop-color="#132033" />
+        <stop offset="45%" stop-color="#22355d" />
+        <stop offset="100%" stop-color="#4f6696" />
       </linearGradient>
+      <radialGradient id="glow" cx="82%" cy="22%" r="75%">
+        <stop offset="0%" stop-color="rgba(145,186,255,0.35)" />
+        <stop offset="60%" stop-color="rgba(145,186,255,0.06)" />
+        <stop offset="100%" stop-color="rgba(145,186,255,0)" />
+      </linearGradient>
+      <pattern id="diag" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)">
+        <rect width="24" height="24" fill="transparent" />
+        <line x1="0" y1="0" x2="0" y2="24" stroke="rgba(255,255,255,0.08)" stroke-width="3" />
+      </pattern>
+      <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.5" fill="rgba(255,255,255,0.12)" />
+      </pattern>
       <linearGradient id="overlay" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="rgba(0,0,0,0.15)" />
-        <stop offset="100%" stop-color="rgba(0,0,0,0.38)" />
+        <stop offset="0%" stop-color="rgba(0,0,0,0.06)" />
+        <stop offset="100%" stop-color="rgba(0,0,0,0.4)" />
       </linearGradient>
     </defs>
     <rect width="100%" height="100%" fill="url(#bg)" />
+    <rect width="100%" height="100%" fill="url(#diag)" />
+    <rect width="100%" height="100%" fill="url(#dots)" />
+    <rect width="100%" height="100%" fill="url(#glow)" />
     <rect width="100%" height="100%" fill="url(#overlay)" />
     <text x="50%" y="49%" text-anchor="middle" fill="#ffffff" font-size="56" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" font-weight="700" letter-spacing="0.5">${article.brand}</text>
     <text x="50%" y="58%" text-anchor="middle" fill="#dce4f7" font-size="28" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" letter-spacing="0.3">${article.topic}</text>
