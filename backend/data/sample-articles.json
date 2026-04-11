@@ -1,0 +1,40 @@
+[
+  {
+    "id": "a-1001",
+    "title": "Tesla updates U.S. Supercharger pricing for peak demand windows",
+    "headline": "Tesla adjusts peak-hour Supercharger pricing in U.S. markets",
+    "shortSummary": "Tesla has introduced revised time-of-day pricing at select U.S. Supercharger sites to improve stall availability during peak demand. The company says pricing changes are intended to spread charging load and reduce wait times.",
+    "bullets": [
+      "Higher rates apply during specified demand windows",
+      "Off-peak discounts remain at many locations",
+      "Policy is framed as a congestion-management step"
+    ],
+    "whyItMatters": "Pricing signals can influence station utilization and user behavior.",
+    "source": "CNBC",
+    "link": "https://example.com/tesla-pricing",
+    "topic": "Charging infrastructure",
+    "brand": "Tesla",
+    "region": "US",
+    "approvalStatus": "draft",
+    "publishToX": false
+  },
+  {
+    "id": "a-1002",
+    "title": "CATL announces higher-density LFP pack update for commercial EV fleets",
+    "headline": "CATL unveils denser LFP battery pack for fleet EVs",
+    "shortSummary": "CATL presented an LFP pack update aimed at increasing energy density and cycle-life performance for commercial electric fleets. The company says the new pack is designed for lower total cost of ownership over long duty cycles.",
+    "bullets": [
+      "Improved energy density over prior generation",
+      "Targeted at buses and urban logistics fleets",
+      "Focus on durability and cost-per-kilometer"
+    ],
+    "whyItMatters": "Incremental battery gains can materially improve fleet economics.",
+    "source": "Nikkei Asia",
+    "link": "https://example.com/catl-lfp",
+    "topic": "Battery technology",
+    "brand": "CATL",
+    "region": "China",
+    "approvalStatus": "approved",
+    "publishToX": true
+  }
+]
