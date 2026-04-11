@@ -3,29 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EV Pulse — Jalopnik-inspired EV Newsroom</title>
-  <meta name="description" content="EV Pulse delivers EV and automotive industry coverage in a bold, editorial newsroom layout." />
+  <title>EV Pulse | Car News</title>
+  <meta name="description" content="EV Pulse car news in a fast, section-driven editorial layout." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="masthead">EV PULSE</div>
-    <nav class="section-nav">
-      <a href="#latest">Latest</a>
-      <a href="#top5">Top Stories</a>
-      <a href="#trending">Brands</a>
+  <header class="top-header">
+    <div class="top-strip">Latest EV and automotive industry coverage</div>
+    <div class="brand-row">
+      <div class="logo">EV <span>Pulse</span></div>
+      <div class="quick-links">
+        <a href="#latest">News</a>
+        <a href="#top5">Top Stories</a>
+        <a href="#trending">Brands</a>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <a href="#latest">Car News</a>
+      <a href="#top5">Electric Cars</a>
+      <a href="#newsGrid">Industry</a>
+      <a href="#trending">Reviews</a>
     </nav>
   </header>
 
   <main class="page">
-    <section class="lead-story" id="latest">
-      <div class="lead-story-inner">
-        <p class="kicker">Electric mobility newsroom</p>
-        <h1>Bite-sized EV reporting with a fast, magazine-style reading experience.</h1>
-        <p class="dek">Track battery breakthroughs, policy changes, and market shifts in one place.</p>
+    <section class="hero" id="latest">
+      <article class="hero-main">
+        <p class="eyebrow">Car News</p>
+        <h1>Daily EV headlines, market updates, and policy moves.</h1>
+        <p class="hero-copy">A clean, section-led layout inspired by UK automotive news portals, tuned for quick scanning.</p>
+      </article>
+      <aside class="hero-controls">
+        <h2>Filter stories</h2>
         <div class="controls">
           <input id="searchInput" type="search" placeholder="Search topic, brand, region..." aria-label="Search EV news" />
           <select id="topicFilter"><option value="all">All topics</option></select>
@@ -37,10 +49,10 @@
             <option value="China">China</option>
           </select>
         </div>
-      </div>
+      </aside>
     </section>
 
-    <section id="top5" class="strip">
+    <section id="top5" class="headline-strip">
       <h2>Top stories</h2>
       <ol id="topHeadlines"></ol>
     </section>
@@ -48,7 +60,7 @@
     <section class="content-grid">
       <section class="stories">
         <div class="stories-head">
-          <h2>Latest EV stories</h2>
+          <h2>Latest car news</h2>
           <span id="resultCount"></span>
         </div>
         <div id="newsGrid" class="news-list"></div>
