@@ -59,7 +59,8 @@ body {
 
 .lead-story {
   width: 100%;
-  min-height: clamp(200px, 28vw, 280px);
+  aspect-ratio: 16 / 6;
+  min-height: clamp(120px, 16vw, 190px);
   background: var(--paper);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -224,7 +225,7 @@ footer {
 
 @media (max-width: 900px) {
   .lead-story {
-    min-height: 200px;
+    min-height: clamp(110px, 22vw, 160px);
     padding: .85rem 0;
   }
 
