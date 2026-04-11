@@ -53,22 +53,22 @@ const state = {
 function buildFallbackImage(article) {
   const canvasWidth = 1200;
   const canvasHeight = 675;
-  const blockScale = 0.3;
-  const blockWidth = canvasWidth * blockScale;
-  const blockHeight = canvasHeight * blockScale;
-  const blockX = (canvasWidth - blockWidth) / 2;
-  const blockY = (canvasHeight - blockHeight) / 2;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}" viewBox="0 0 ${canvasWidth} ${canvasHeight}">
     <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#232a38" />
-        <stop offset="100%" stop-color="#56627d" />
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#1f283a" />
+        <stop offset="100%" stop-color="#4d5d82" />
+      </linearGradient>
+      <linearGradient id="overlay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(0,0,0,0.15)" />
+        <stop offset="100%" stop-color="rgba(0,0,0,0.38)" />
       </linearGradient>
     </defs>
-    <rect x="${blockX}" y="${blockY}" width="${blockWidth}" height="${blockHeight}" fill="url(#g)" />
-    <text x="50%" y="48%" text-anchor="middle" fill="#ffffff" font-size="17" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" font-weight="700" letter-spacing="0.5">${article.brand}</text>
-    <text x="50%" y="58%" text-anchor="middle" fill="#d6dceb" font-size="10" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" letter-spacing="0.3">${article.topic}</text>
+    <rect width="100%" height="100%" fill="url(#bg)" />
+    <rect width="100%" height="100%" fill="url(#overlay)" />
+    <text x="50%" y="49%" text-anchor="middle" fill="#ffffff" font-size="56" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" font-weight="700" letter-spacing="0.5">${article.brand}</text>
+    <text x="50%" y="58%" text-anchor="middle" fill="#dce4f7" font-size="28" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" letter-spacing="0.3">${article.topic}</text>
   </svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
