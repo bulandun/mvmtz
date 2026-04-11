@@ -59,24 +59,27 @@ body {
 
 .lead-story {
   width: 100%;
-  aspect-ratio: 16 / 6;
-  min-height: clamp(120px, 16vw, 190px);
-  background: var(--paper);
+  min-height: clamp(70px, 6.5vw, 88px);
+  background: linear-gradient(135deg, #1f4e9d 0%, #2a6fd6 55%, #1b5fc7 100%);
+  background-size: cover;
+  background-position: center;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  padding: 1rem 0;
+  justify-content: center;
+  padding: .4rem 0;
 }
 
 .lead-story-inner {
   width: min(1150px, 94%);
   margin-inline: auto;
+  text-align: center;
 }
 
 .kicker {
-  color: var(--accent);
+  color: #e9f1ff;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .03em;
@@ -87,9 +90,10 @@ h1 {
   font-family: Merriweather, Georgia, serif;
   font-size: clamp(1.5rem, 3vw, 2.3rem);
   margin: .55rem 0;
+  color: #fff;
 }
 
-.dek { color: var(--muted); margin: 0 0 .95rem; }
+.dek { color: #d6e6ff; margin: 0 0 .7rem; }
 
 .controls {
   display: grid;
@@ -225,8 +229,8 @@ footer {
 
 @media (max-width: 900px) {
   .lead-story {
-    min-height: clamp(110px, 22vw, 160px);
-    padding: .85rem 0;
+    min-height: clamp(64px, 12vw, 82px);
+    padding: .35rem 0;
   }
 
   .content-grid { grid-template-columns: 1fr; }
