@@ -11,9 +11,7 @@ const state = {
       link: "https://example.com/rivian-r2-battery",
       summary: "Rivian detailed a revised battery pack layout aimed at reducing module complexity and lowering production cost. The architecture targets better thermal control and faster assembly for the upcoming R2 line.",
       bullets: ["Fewer pack modules and simplified wiring", "Improved thermal channels for sustained fast charging", "Manufacturing changes intended to reduce cost per kWh"],
-      why: "It could improve EV affordability in the midsize segment.",
-      status: "draft",
-      publishToX: false
+      why: "It could improve EV affordability in the midsize segment."
     },
     {
       id: 2,
@@ -26,9 +24,7 @@ const state = {
       link: "https://example.com/eu-charging-corridor",
       summary: "European regulators confirmed minimum high-power charger density targets along major freight and passenger corridors. Member states must report rollout milestones quarterly.",
       bullets: ["Mandated charger intervals on priority routes", "Quarterly compliance reporting required", "Funding linked to milestone performance"],
-      why: "Standardized fast-charging access can reduce cross-border range anxiety.",
-      status: "approved",
-      publishToX: true
+      why: "Standardized fast-charging access can reduce cross-border range anxiety."
     },
     {
       id: 3,
@@ -41,12 +37,9 @@ const state = {
       link: "https://example.com/byd-sodium-ion",
       summary: "BYD is scaling pilot production of sodium-ion batteries for short-range urban electric vehicles. The move targets material diversification and lower exposure to lithium volatility.",
       bullets: ["Pilot capacity raised for urban fleet applications", "Sodium-ion chemistry positioned for cost-sensitive segments", "Program designed to hedge battery raw-material swings"],
-      why: "Alternative chemistries can reshape entry-level EV economics.",
-      status: "approved",
-      publishToX: false
+      why: "Alternative chemistries can reshape entry-level EV economics."
     }
-  ],
-  postHistory: []
+  ]
 };
 
 function renderFilters() {
@@ -76,6 +69,7 @@ function renderNews() {
   const grid = document.getElementById("newsGrid");
   const filtered = getFilteredArticles();
   document.getElementById("resultCount").textContent = `${filtered.length} stories`;
+
   grid.innerHTML = filtered.map((a) => `
     <article class="card">
       <div class="meta">${a.date} • ${a.topic} • ${a.region}</div>
@@ -83,7 +77,7 @@ function renderNews() {
       <p>${a.summary}</p>
       <ul>${a.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>
       <p><strong>Why it matters:</strong> ${a.why}</p>
-      <a class="source" target="_blank" href="${a.link}">Source: ${a.source}</a>
+      <a class="source" target="_blank" rel="noopener noreferrer" href="${a.link}">Source: ${a.source}</a>
     </article>
   `).join("");
 }
@@ -92,7 +86,7 @@ function renderTop5() {
   const top = [...state.articles]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 5)
-    .map((a) => `<li>${a.title} <span class="muted">(${a.source})</span></li>`)
+    .map((a) => `<li>${a.title} <span class="meta">(${a.source})</span></li>`)
     .join("");
   document.getElementById("topHeadlines").innerHTML = top;
 }
@@ -108,52 +102,6 @@ function renderTrendingBrands() {
     .join("");
 }
 
-function postToX(article) {
-  const hashtags = "#EV #ElectricVehicles #BatteryTech";
-  const text = `${article.title}\n\n${article.bullets[0]}\nSource: ${article.source}\n${hashtags}`;
-  state.postHistory.unshift({ title: article.title, text, when: new Date().toISOString(), status: "posted" });
-}
-
-function renderAdmin() {
-  const queue = document.getElementById("adminQueue");
-  const pending = state.articles.filter((a) => a.status !== "rejected");
-  queue.innerHTML = pending.map((a) => `
-    <div class="admin-item">
-      <strong>${a.title}</strong>
-      <div class="meta">Status: ${a.status} • Publish to X: ${a.publishToX ? "yes" : "no"}</div>
-      <textarea data-id="${a.id}" rows="3">${a.summary}</textarea>
-      <div class="admin-actions">
-        <button onclick="updateSummary(${a.id})">Save edit</button>
-        <button class="secondary" onclick="setStatus(${a.id}, 'approved')">Approve</button>
-        <button class="secondary" onclick="setStatus(${a.id}, 'rejected')">Reject</button>
-        <button class="secondary" onclick="toggleX(${a.id})">Toggle X</button>
-      </div>
-    </div>
-  `).join("");
-
-  document.getElementById("postHistory").innerHTML = state.postHistory
-    .map((p) => `<li>${p.when} — ${p.status.toUpperCase()} — ${p.title}</li>`)
-    .join("");
-}
-
-window.updateSummary = function (id) {
-  const t = document.querySelector(`textarea[data-id='${id}']`);
-  state.articles = state.articles.map((a) => (a.id === id ? { ...a, summary: t.value } : a));
-  renderNews();
-};
-
-window.setStatus = function (id, status) {
-  state.articles = state.articles.map((a) => (a.id === id ? { ...a, status } : a));
-  const article = state.articles.find((a) => a.id === id);
-  if (status === "approved" && article.publishToX) postToX(article);
-  renderAdmin();
-};
-
-window.toggleX = function (id) {
-  state.articles = state.articles.map((a) => (a.id === id ? { ...a, publishToX: !a.publishToX } : a));
-  renderAdmin();
-};
-
 ["searchInput", "topicFilter", "regionFilter"].forEach((id) => {
   document.getElementById(id).addEventListener("input", renderNews);
 });
@@ -162,4 +110,3 @@ renderFilters();
 renderTop5();
 renderTrendingBrands();
 renderNews();
-renderAdmin();
