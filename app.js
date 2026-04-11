@@ -45,17 +45,25 @@ const state = {
   ]
 };
 
-const brandImageQueries = {
-  BYD: "BYD,electric car",
-  Rivian: "Rivian,electric vehicle",
-  Tesla: "Tesla,electric vehicle",
-  CATL: "CATL,battery factory"
-};
+function buildFallbackImage(article) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#232a38" />
+        <stop offset="100%" stop-color="#56627d" />
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="675" fill="url(#g)" />
+    <text x="50%" y="48%" text-anchor="middle" fill="#ffffff" font-size="56" font-family="Inter, Arial, sans-serif" font-weight="700">${article.brand}</text>
+    <text x="50%" y="58%" text-anchor="middle" fill="#d6dceb" font-size="32" font-family="Inter, Arial, sans-serif">${article.topic}</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
 
 function resolveStoryImage(article) {
   if (article.image) return article.image;
-  const query = brandImageQueries[article.brand] || `${article.brand},${article.topic},electric vehicle`;
-  return `https://source.unsplash.com/1200x675/?${encodeURIComponent(query)}`;
+  const seed = encodeURIComponent(`${article.id}-${article.brand}-${article.topic}`);
+  return `https://picsum.photos/seed/${seed}/1200/675`;
 }
 
 function renderFilters() {
@@ -88,7 +96,13 @@ function renderNews() {
 
   grid.innerHTML = filtered.map((a) => `
     <article class="card">
-      <img class="story-image" src="${resolveStoryImage(a)}" alt="${a.brand} related to ${a.title}" loading="lazy" />
+      <img
+        class="story-image"
+        src="${resolveStoryImage(a)}"
+        alt="${a.brand} related to ${a.title}"
+        loading="lazy"
+        onerror="this.onerror=null;this.src='${buildFallbackImage(a)}';"
+      />
       <div class="meta">${a.date} • ${a.topic} • ${a.region}</div>
       <h3>${a.title}</h3>
       <p>${a.summary}</p>
