@@ -59,8 +59,8 @@ function buildFallbackImage(article) {
       </linearGradient>
     </defs>
     <rect width="1200" height="675" fill="url(#g)" />
-    <text x="50%" y="48%" text-anchor="middle" fill="#ffffff" font-size="56" font-family="Inter, Arial, sans-serif" font-weight="700">${article.brand}</text>
-    <text x="50%" y="58%" text-anchor="middle" fill="#d6dceb" font-size="32" font-family="Inter, Arial, sans-serif">${article.topic}</text>
+    <text x="50%" y="48%" text-anchor="middle" fill="#ffffff" font-size="17" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" font-weight="700" letter-spacing="0.5">${article.brand}</text>
+    <text x="50%" y="58%" text-anchor="middle" fill="#d6dceb" font-size="10" font-family="Avenir Next, Montserrat, Poppins, Inter, Arial, sans-serif" letter-spacing="0.3">${article.topic}</text>
   </svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
