@@ -50,13 +50,28 @@ body {
   font-size: .82rem;
 }
 
-.page { width: min(1150px, 94%); margin: 1.25rem auto 2rem; }
+.page { width: 100%; margin: 0 0 2rem; }
+
+.page > :not(.lead-story) {
+  width: min(1150px, 94%);
+  margin-inline: auto;
+}
 
 .lead-story {
+  width: 100%;
+  min-height: clamp(200px, 28vw, 280px);
   background: var(--paper);
-  border: 1px solid var(--line);
-  padding: 1rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.lead-story-inner {
+  width: min(1150px, 94%);
+  margin-inline: auto;
 }
 
 .kicker {
@@ -208,6 +223,11 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .lead-story {
+    min-height: 200px;
+    padding: .85rem 0;
+  }
+
   .content-grid { grid-template-columns: 1fr; }
   .controls { grid-template-columns: 1fr; }
 }
