@@ -9,6 +9,7 @@ const state = {
       region: "US",
       brand: "Rivian",
       link: "https://example.com/rivian-r2-battery",
+      image: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=1200&q=80",
       summary: "Rivian detailed a revised battery pack layout aimed at reducing module complexity and lowering production cost. The architecture targets better thermal control and faster assembly for the upcoming R2 line.",
       bullets: ["Fewer pack modules and simplified wiring", "Improved thermal channels for sustained fast charging", "Manufacturing changes intended to reduce cost per kWh"],
       why: "It could improve EV affordability in the midsize segment."
@@ -22,6 +23,7 @@ const state = {
       region: "Europe",
       brand: "Public Policy",
       link: "https://example.com/eu-charging-corridor",
+      image: "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?auto=format&fit=crop&w=1200&q=80",
       summary: "European regulators confirmed minimum high-power charger density targets along major freight and passenger corridors. Member states must report rollout milestones quarterly.",
       bullets: ["Mandated charger intervals on priority routes", "Quarterly compliance reporting required", "Funding linked to milestone performance"],
       why: "Standardized fast-charging access can reduce cross-border range anxiety."
@@ -35,6 +37,7 @@ const state = {
       region: "China",
       brand: "BYD",
       link: "https://example.com/byd-sodium-ion",
+      image: "https://images.unsplash.com/photo-1621361365424-06f0e1eb5c49?auto=format&fit=crop&w=1200&q=80",
       summary: "BYD is scaling pilot production of sodium-ion batteries for short-range urban electric vehicles. The move targets material diversification and lower exposure to lithium volatility.",
       bullets: ["Pilot capacity raised for urban fleet applications", "Sodium-ion chemistry positioned for cost-sensitive segments", "Program designed to hedge battery raw-material swings"],
       why: "Alternative chemistries can reshape entry-level EV economics."
@@ -72,6 +75,7 @@ function renderNews() {
 
   grid.innerHTML = filtered.map((a) => `
     <article class="card">
+      <img class="story-image" src="${a.image}" alt="${a.title}" loading="lazy" />
       <div class="meta">${a.date} • ${a.topic} • ${a.region}</div>
       <h3>${a.title}</h3>
       <p>${a.summary}</p>
