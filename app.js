@@ -1,4 +1,5 @@
 const state = {
+  apiBaseUrl: "http://localhost:3001",
   brandLogos: {
     Rivian: "https://logo.clearbit.com/rivian.com",
     BYD: "https://logo.clearbit.com/byd.com",
@@ -116,7 +117,7 @@ function renderNews() {
         loading="lazy"
         onerror="this.onerror=null;this.src='${buildFallbackImage(a)}';"
       />
-      <div class="meta">${a.date} • ${a.topic} • ${a.region}</div>
+      <div class="meta">${a.date} • ${a.topic} • ${a.region}${a.sourceType ? ` • ${a.sourceType}` : ""}</div>
       <h3>${a.title}</h3>
       <p>${a.summary}</p>
       <ul>${a.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>
@@ -165,3 +166,31 @@ renderFilters();
 renderTop5();
 renderTrendingBrands();
 renderNews();
+
+async function loadLatestDailyNews() {
+  try {
+    const [newsRes, metaRes] = await Promise.all([
+      fetch(`${state.apiBaseUrl}/api/news`),
+      fetch(`${state.apiBaseUrl}/api/news/meta`)
+    ]);
+
+    if (!newsRes.ok) throw new Error("Unable to load latest EV news");
+    const news = await newsRes.json();
+    state.articles = news;
+    document.getElementById("topicFilter").innerHTML = '<option value="all">All topics</option>';
+    renderFilters();
+    renderTop5();
+    renderTrendingBrands();
+    renderNews();
+
+    if (metaRes.ok) {
+      const meta = await metaRes.json();
+      const refreshed = new Date(meta.refreshedAtUtc).toLocaleString();
+      document.getElementById("refreshMeta").textContent = `Daily refresh enabled • last sync ${refreshed} • includes social + automaker sources`;
+    }
+  } catch (_err) {
+    document.getElementById("refreshMeta").textContent = "Live API unavailable; showing local editorial fallback.";
+  }
+}
+
+loadLatestDailyNews();
