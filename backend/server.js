@@ -1,12 +1,24 @@
 import express from "express";
+import cron from "node-cron";
 import sample from "./data/sample-articles.json" assert { type: "json" };
 import { buildXPost } from "./services/twitterPublisher.js";
+import { buildDailySourceRoundup } from "./services/newsIngestion.js";
 
 const app = express();
 app.use(express.json());
 
 let articles = sample;
 let socialHistory = [];
+
+function refreshDailyNews() {
+  const daily = buildDailySourceRoundup();
+  const existingById = new Map(articles.map((a) => [a.id, a]));
+  daily.forEach((item) => existingById.set(item.id, item));
+  articles = [...existingById.values()].sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+}
+
+refreshDailyNews();
+cron.schedule("0 6 * * *", refreshDailyNews);
 
 app.get("/api/news", (req, res) => {
   const { topic = "all", region = "all", q = "" } = req.query;
@@ -17,6 +29,14 @@ app.get("/api/news", (req, res) => {
     return hit && topicMatch && regionMatch;
   });
   res.json(filtered);
+});
+
+app.get("/api/news/meta", (_req, res) => {
+  res.json({
+    refreshedAtUtc: new Date().toISOString(),
+    refreshScheduleUtc: "0 6 * * *",
+    sourceTypes: ["editorial", "social", "automaker"]
+  });
 });
 
 app.post("/api/admin/:id/approve", (req, res) => {
