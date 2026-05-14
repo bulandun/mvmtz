@@ -2,23 +2,24 @@ import express from "express";
 import cron from "node-cron";
 import sample from "./data/sample-articles.json" assert { type: "json" };
 import { buildXPost } from "./services/twitterPublisher.js";
-import { buildDailySourceRoundup } from "./services/newsIngestion.js";
+import { buildLiveSearchRoundup, removeDuplicates } from "./services/newsIngestion.js";
 
 const app = express();
 app.use(express.json());
 
 let articles = sample;
 let socialHistory = [];
+let lastRefreshAtUtc = null;
 
-function refreshDailyNews() {
-  const daily = buildDailySourceRoundup();
-  const existingById = new Map(articles.map((a) => [a.id, a]));
-  daily.forEach((item) => existingById.set(item.id, item));
-  articles = [...existingById.values()].sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+function refreshLiveNews() {
+  const liveSearchCards = buildLiveSearchRoundup();
+  articles = removeDuplicates([...liveSearchCards, ...articles]);
+  articles = articles.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  lastRefreshAtUtc = new Date().toISOString();
 }
 
-refreshDailyNews();
-cron.schedule("0 6 * * *", refreshDailyNews);
+refreshLiveNews();
+cron.schedule("*/15 * * * *", refreshLiveNews);
 
 app.get("/api/news", (req, res) => {
   const { topic = "all", region = "all", q = "" } = req.query;
@@ -33,10 +34,15 @@ app.get("/api/news", (req, res) => {
 
 app.get("/api/news/meta", (_req, res) => {
   res.json({
-    refreshedAtUtc: new Date().toISOString(),
-    refreshScheduleUtc: "0 6 * * *",
+    refreshedAtUtc: lastRefreshAtUtc,
+    refreshScheduleUtc: "*/15 * * * *",
     sourceTypes: ["editorial", "social", "automaker"]
   });
+});
+
+app.post("/api/admin/refresh", (_req, res) => {
+  refreshLiveNews();
+  res.json({ ok: true, refreshedAtUtc: lastRefreshAtUtc });
 });
 
 app.post("/api/admin/:id/approve", (req, res) => {

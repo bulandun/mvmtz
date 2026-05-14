@@ -13,6 +13,49 @@ const EV_TOPICS = [
   "US EV market"
 ];
 
+const LIVE_SOURCE_QUERIES = [
+  {
+    source: "Google News",
+    sourceType: "editorial",
+    topic: "Battery technology",
+    brand: "Industry",
+    region: "Global",
+    url: "https://news.google.com/search?q=EV+battery+technology"
+  },
+  {
+    source: "Google News",
+    sourceType: "editorial",
+    topic: "Charging infrastructure",
+    brand: "Industry",
+    region: "Global",
+    url: "https://news.google.com/search?q=EV+charging+infrastructure"
+  },
+  {
+    source: "Google News",
+    sourceType: "editorial",
+    topic: "Market and finance",
+    brand: "Industry",
+    region: "US",
+    url: "https://news.google.com/search?q=US+EV+market"
+  },
+  {
+    source: "Google News",
+    sourceType: "editorial",
+    topic: "China EV market",
+    brand: "Industry",
+    region: "China",
+    url: "https://news.google.com/search?q=China+EV+market"
+  },
+  {
+    source: "Google News",
+    sourceType: "editorial",
+    topic: "Europe EV market",
+    brand: "Industry",
+    region: "Europe",
+    url: "https://news.google.com/search?q=Europe+EV+market"
+  }
+];
+
 export function normalizeArticle(raw) {
   const text = `${raw.title || ""} ${raw.snippet || ""}`.trim();
   return {
@@ -61,67 +104,27 @@ function hash(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
 }
 
-export function buildDailySourceRoundup({ now = new Date() } = {}) {
-  const today = now.toISOString().slice(0, 10);
-
-  return [
-    {
-      id: `social-x-rivian-${today}`,
-      title: "Rivian shares software rollout details for new highway assist update",
-      headline: "Rivian highlights latest highway assist update",
-      shortSummary:
-        "Rivian posted a thread on X outlining improvements to lane centering confidence and driver-alert timing. The company says the update is being staged to vehicles over multiple days.",
-      bullets: [
-        "Phased OTA rollout is underway",
-        "Driver monitoring prompts were adjusted",
-        "Feature remains geofence-dependent"
-      ],
-      whyItMatters: "Software cadence increasingly shapes EV ownership satisfaction.",
-      source: "Rivian on X",
-      sourceType: "social",
-      link: "https://x.com/Rivian",
-      topic: "Autonomous driving",
-      brand: "Rivian",
-      region: "US",
-      date: today,
-      approvalStatus: "draft",
-      publishToX: false
-    },
-    {
-      id: `company-tesla-newsroom-${today}`,
-      title: "Tesla publishes charging site expansion milestones in latest newsroom update",
-      headline: "Tesla newsroom details recent Supercharger expansion",
-      shortSummary:
-        "Tesla's newsroom update lists newly opened and expanded fast-charging sites and reiterates utilization goals for peak corridors.",
-      bullets: ["New high-traffic sites added", "Throughput focus at existing stations", "Regional build-out priorities updated"],
-      whyItMatters: "Charging network density remains a top driver of practical EV adoption.",
-      source: "Tesla Newsroom",
-      sourceType: "automaker",
-      link: "https://www.tesla.com/news",
-      topic: "Charging infrastructure",
-      brand: "Tesla",
-      region: "US",
-      date: today,
-      approvalStatus: "draft",
-      publishToX: false
-    },
-    {
-      id: `company-byd-${today}`,
-      title: "BYD investor update outlines battery supply and production guidance",
-      headline: "BYD shares updated production and battery guidance",
-      shortSummary:
-        "In its latest corporate update, BYD emphasized pack production targets and supply-chain coordination to support upcoming EV launches.",
-      bullets: ["Battery output targets reiterated", "Supply chain coordination highlighted", "Launch cadence guidance unchanged"],
-      whyItMatters: "Production execution can quickly influence EV pricing and availability.",
-      source: "BYD Corporate",
-      sourceType: "automaker",
-      link: "https://www.bydglobal.com/en/news",
-      topic: "Manufacturing and supply chain",
-      brand: "BYD",
-      region: "China",
-      date: today,
-      approvalStatus: "draft",
-      publishToX: false
-    }
-  ];
+export function buildLiveSearchRoundup({ now = new Date() } = {}) {
+  const timestamp = now.toISOString();
+  return LIVE_SOURCE_QUERIES.map((query) => ({
+    id: `live-search-${hash(`${query.url}-${timestamp}`).slice(0, 12)}`,
+    title: `Live EV watch: ${query.topic}`,
+    headline: `Monitoring ${query.topic.toLowerCase()} updates`,
+    shortSummary: `Fresh query prepared for ${query.source} to keep the EV feed updated with recent coverage in ${query.region}.`,
+    bullets: [
+      "Search query targets current EV headlines",
+      "Use this link to find the latest stories",
+      "Summaries can be generated after source review"
+    ],
+    whyItMatters: "Continuous discovery helps keep EV monitoring current throughout the day.",
+    source: query.source,
+    sourceType: query.sourceType,
+    link: query.url,
+    topic: query.topic,
+    brand: query.brand,
+    region: query.region,
+    date: timestamp,
+    approvalStatus: "draft",
+    publishToX: false
+  }));
 }

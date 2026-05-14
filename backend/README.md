@@ -3,8 +3,8 @@
 This folder provides a production-ready reference architecture for ingestion, summarization, moderation, scheduling, analytics, and X/Twitter publishing.
 
 ## Components
-- `server.js`: Express API routes for public feed, admin moderation, and publishing.
-- `services/newsIngestion.js`: RSS/API fetch, normalization, dedupe, categorization.
+- `server.js`: Express API routes for public feed, admin moderation, publishing, and 15-minute EV live-search refresh.
+- `services/newsIngestion.js`: RSS/API fetch, normalization, dedupe, categorization, and live EV query card generation.
 - `services/summarizer.js`: AI summary generation with strict factuality guardrails.
 - `services/twitterPublisher.js`: Post formatter + publish handler with status tracking.
 - `jobs/scheduler.js`: Cron-like orchestration for fetch/summarize/post pipelines.
