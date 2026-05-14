@@ -2,7 +2,7 @@ import express from "express";
 import cron from "node-cron";
 import sample from "./data/sample-articles.json" assert { type: "json" };
 import { buildXPost } from "./services/twitterPublisher.js";
-import { buildLiveSearchRoundup, removeDuplicates } from "./services/newsIngestion.js";
+import { buildLiveSearchRoundup, fetchLatestEvNews, removeDuplicates } from "./services/newsIngestion.js";
 
 const app = express();
 app.use(express.json());
@@ -11,15 +11,22 @@ let articles = sample;
 let socialHistory = [];
 let lastRefreshAtUtc = null;
 
-function refreshLiveNews() {
-  const liveSearchCards = buildLiveSearchRoundup();
-  articles = removeDuplicates([...liveSearchCards, ...articles]);
+async function refreshLiveNews() {
+  const [latestNews, liveSearchCards] = await Promise.all([
+    fetchLatestEvNews().catch(() => []),
+    Promise.resolve(buildLiveSearchRoundup())
+  ]);
+
+  const nextFeed = latestNews.length ? [...latestNews, ...liveSearchCards, ...sample] : [...liveSearchCards, ...sample];
+  articles = removeDuplicates(nextFeed);
   articles = articles.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
   lastRefreshAtUtc = new Date().toISOString();
 }
 
 refreshLiveNews();
-cron.schedule("*/15 * * * *", refreshLiveNews);
+cron.schedule("*/15 * * * *", () => {
+  refreshLiveNews().catch(() => {});
+});
 
 app.get("/api/news", (req, res) => {
   const { topic = "all", region = "all", q = "" } = req.query;
@@ -41,8 +48,13 @@ app.get("/api/news/meta", (_req, res) => {
 });
 
 app.post("/api/admin/refresh", (_req, res) => {
-  refreshLiveNews();
-  res.json({ ok: true, refreshedAtUtc: lastRefreshAtUtc });
+  refreshLiveNews()
+    .then(() => {
+      res.json({ ok: true, refreshedAtUtc: lastRefreshAtUtc });
+    })
+    .catch(() => {
+      res.status(500).json({ ok: false, message: "Refresh failed" });
+    });
 });
 
 app.post("/api/admin/:id/approve", (req, res) => {
